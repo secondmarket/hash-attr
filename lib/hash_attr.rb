@@ -28,11 +28,14 @@ module HashAttr
   private
   def value(object)
     hash_attr = lambda { |object| object.respond_to? :attribute_hash }
+    hash = lambda { |object| object.respond_to? :keys }
     mappable = lambda { |object| object.respond_to? :map }
 
     case object
       when hash_attr then
         object.attributes
+      when hash then
+        object
       when mappable then
         object.map { |val| value(val) }
       else
