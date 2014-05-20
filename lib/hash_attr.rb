@@ -22,7 +22,7 @@ module HashAttr
   end
 
   def attributes
-    Hash[@attribute_hash.map { |key, value| [key, value(value)] }]
+    @attribute_hash.nil? ? {} : Hash[@attribute_hash.map { |key, value| [key, value(value)] }]
   end
 
   private
@@ -35,7 +35,7 @@ module HashAttr
       when hash_attr then
         object.attributes
       when hash then
-        object
+        Hash[object.map { |key, val| [key, value(val)] }]
       when mappable then
         object.map { |val| value(val) }
       else
