@@ -22,11 +22,11 @@ module HashAttr
   end
 
   def attributes
-    Hash[attribute_hash.map { |key, val| [key, value(val)] }]
+    Hash[attribute_hash.map { |key, val| [key, __value(val)] }]
   end
 
   private
-  def value(object)
+  def __value(object)
     hash_attr = lambda { |object| object.respond_to? :attribute_hash }
     hash = lambda { |object| object.respond_to? :keys }
     mappable = lambda { |object| object.respond_to? :map }
@@ -35,9 +35,9 @@ module HashAttr
       when hash_attr then
         object.attributes
       when hash then
-        Hash[object.map { |key, val| [key, value(val)] }]
+        Hash[object.map { |key, val| [key, __value(val)] }]
       when mappable then
-        object.map { |val| value(val) }
+        object.map { |val| __value(val) }
       else
         object
     end
