@@ -22,7 +22,7 @@ module HashAttr
   end
 
   def attributes
-    @attribute_hash.nil? ? {} : Hash[@attribute_hash.map { |key, value| [key, value(value)] }]
+    Hash[attribute_hash.map { |key, val| [key, value(val)] }]
   end
 
   private
